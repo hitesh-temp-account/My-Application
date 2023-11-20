@@ -1,0 +1,21 @@
+name: Update README
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update_readme:
+    name: Update File
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run gradle command
+        run: ./gradlew generateReadme
+      - name: Update README.md
+        run: |
+          sed -i 's/<reponame>/'${{ github.event.repository.name }}'/' README.md
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git commit -am "Automated report"
+          git push
