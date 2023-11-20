@@ -1,0 +1,17 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id 'com.android.application' version '8.1.2' apply false
+}
+
+project.ext {
+    versionName = property('versionName')
+}
+
+task generateReadme {
+    doLast {
+        def readmeFile = file('README.md')
+        def updatedTemplate = readmeFile.text
+        updatedTemplate = updatedTemplate.replaceAll(/([![VERSION](https:img.shields.io\/badge\/version-).*/, "\$1${project.versionName}-green.svg)](https://www.nba.com)")
+        readmeFile.write(updatedTemplate)
+    }
+}
